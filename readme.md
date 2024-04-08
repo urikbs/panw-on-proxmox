@@ -1,6 +1,6 @@
 # Palo Alto VM Series & Panorama Proxmox Installation
 
-Special thanks to Zach Forsyth
+Inspired on https://gist.github.com/cdot65
 
 ## Order of operations
 
@@ -18,6 +18,7 @@ wget https://download.somewhere.com/Panorama-KVM-11.1.2.qcow2
 ```
 
 2.2. VM-Series Virtual Appliance
+
 ```bash
 wget https://download.somewhere.com/PA-VM-KVM-11.1.0.qcow2
 ```
@@ -27,6 +28,7 @@ wget https://download.somewhere.com/PA-VM-KVM-11.1.0.qcow2
 Make sure to update accordingly with your environment.
 
 3.1. Panorama VM
+
 Note: Panorama virtual appliance supports only one network interface
 
 ```bash
@@ -49,6 +51,7 @@ qm create 104 \
 ```
 
 3.2. VM-Series
+
 Note: Add as many interfaces as you need
 
 ```bash
@@ -78,11 +81,13 @@ qm create 101 \
 Update your storage path accordingly, in this example I am using `local-lvm`
 
 4.1. Panorama VM
+
 ```bash
 qm importdisk 104 Panorama-KVM-11.1.2.qcow2 local-lvm --format qcow2
 ```
 
 4.2. VM-Series
+
 ```bash
 qm importdisk 101 PA-VM-KVM-11.1.0.qcow2 local-lvm --format qcow2
 ```
@@ -90,11 +95,13 @@ qm importdisk 101 PA-VM-KVM-11.1.0.qcow2 local-lvm --format qcow2
 5. Attach the disk to your VM
 
 5.1. Panorama VM
+
 ```bash
 qm set 104 --virtio0 local-lvm:vm-104-disk-0,discard=on,cache=writeback
 ```
 
 5.2. VM-Series
+
 ```bash
 qm set 101 --virtio0 local-lvm:vm-101-disk-0,discard=on,cache=writeback
 ```
@@ -102,11 +109,13 @@ qm set 101 --virtio0 local-lvm:vm-101-disk-0,discard=on,cache=writeback
 6. Start your VM
 
 6.1. Panorama VM
+
 ```bash
 qm start 104
 ```
 
 6.2. VM-Series
+
 ```bash
 qm start 101
 ```
